@@ -1,12 +1,13 @@
 import fastf1
 from fastf1.plotting import setup_mpl
-from matplotlib import pyplot as plotting
+from matplotlib import pyplot as plt
 
 #enable data cache (download race data one and stores it)
-fastf1.Cache.enable_cache('cache')
+fastf1.Cache.enable_cache('./cache')
 
 #Load qualifying session from Monza 2023
-session = fastf1.get_session(2023,'Monza', 'Q')
+session = fastf1.get_session(2021,'Monza', 'Q')
+session.load()
 
 #Pick fastest laps from VER and HAM
 ver = session.laps.pick_driver('VER').pick_fastest()
@@ -17,11 +18,11 @@ ver_tel = ver.get_car_data().add_distance()
 ham_tel = ham.get_car_data().add_distance()
 
 #Plot speed vs distance
-plt.plot(ver_tel['distance'], ver_tel['Speed'], label='VER')
-plt.plot(ham_tel['distance'], ham_tel['Speed'], label='HAM')
+plt.plot(ver_tel['Distance'], ver_tel['Speed'], label='VER')
+plt.plot(ham_tel['Distance'], ham_tel['Speed'], label='HAM')
 
-plt.titel("Monza 2023 Qualifying - Fastest Laps")
-plt.xlable("Distance (m)")
+plt.title("Monza 2021 Qualifying - Fastest Laps")
+plt.xlabel("Distance (m)")
 plt.ylabel("Speed (km/h)")
-plt.legand()
+plt.legend()
 plt.show()
